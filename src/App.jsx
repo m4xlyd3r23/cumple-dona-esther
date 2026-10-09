@@ -4,7 +4,7 @@ import birthdayBackground from "./assets/images/birthday-candles.png";
 import cakeImage from "./assets/images/torta.png";
 import birthdayMusic from "./assets/audio/cumpleanos.mp3";
 
-const PASSWORD = "1234";
+const PASSWORD = "0710";
 
 const stickers = [
   { icon: "🎈", left: "4%", top: "8%", delay: "0s", duration: "8s" },
