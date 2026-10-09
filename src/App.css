@@ -1,0 +1,1514 @@
+/* =========================================================
+   1. VARIABLES Y ESTILOS GENERALES
+   ========================================================= */
+
+:root {
+  --cream: #fff8e8;
+  --ivory: #fffdf5;
+  --gold: #c8963e;
+  --gold-light: #e8c985;
+  --brown: #56351d;
+  --dark: #0d0906;
+}
+
+#root {
+  width: 100%;
+  min-height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  background: var(--dark);
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+button {
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 4px;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+.scene-exit {
+  animation: sceneFadeOut 0.45s ease forwards;
+}
+
+/* =========================================================
+   2. LOGIN
+   ========================================================= */
+
+.login-scene {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 30px;
+  overflow: hidden;
+  background-color: #cba774;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.login-overlay {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(53, 30, 11, 0.34),
+      rgba(255, 236, 195, 0.06) 50%,
+      rgba(53, 30, 11, 0.34)
+    ),
+    rgba(102, 64, 24, 0.12);
+}
+
+.background-stickers,
+.login-sparkles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.birthday-sticker {
+  position: absolute;
+  z-index: 1;
+  font-size: clamp(21px, 1.8vw, 31px);
+  line-height: 1;
+  opacity: 0.78;
+  user-select: none;
+  filter: drop-shadow(0 4px 6px rgba(50, 27, 8, 0.2));
+  animation: stickerFloat 8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.login-sparkles span {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #f5d990;
+  box-shadow: 0 0 8px rgba(255, 213, 126, 0.8);
+  animation: sparklePulse 3.5s ease-in-out infinite;
+}
+
+.login-sparkles span:nth-child(1) { top: 12%; left: 10%; }
+.login-sparkles span:nth-child(2) { top: 27%; left: 18%; }
+.login-sparkles span:nth-child(3) { top: 43%; left: 7%; }
+.login-sparkles span:nth-child(4) { top: 69%; left: 12%; }
+.login-sparkles span:nth-child(5) { top: 83%; left: 24%; }
+.login-sparkles span:nth-child(6) { top: 18%; right: 10%; }
+.login-sparkles span:nth-child(7) { top: 51%; right: 8%; }
+.login-sparkles span:nth-child(8) { top: 78%; right: 15%; }
+
+/* Tarjeta */
+
+.login-card {
+  position: relative;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(430px, 92vw);
+  min-height: 650px;
+  padding: 42px 38px 28px;
+  border: 1px solid rgba(198, 151, 73, 0.55);
+  border-radius: 28px;
+  background: rgba(255, 249, 232, 0.94);
+  box-shadow:
+    0 28px 65px rgba(63, 36, 13, 0.32),
+    0 0 35px rgba(236, 195, 112, 0.22);
+  animation: cardEntrance 0.8s ease both;
+}
+
+.card-decoration {
+  position: absolute;
+  color: var(--gold);
+  font-size: 22px;
+}
+
+.card-decoration-top {
+  top: 18px;
+  right: 22px;
+}
+
+.card-decoration-bottom {
+  bottom: 18px;
+  left: 22px;
+}
+
+.login-icon {
+  display: grid;
+  place-items: center;
+  width: 58px;
+  height: 58px;
+  margin-bottom: 17px;
+  border: 1px solid rgba(191, 139, 55, 0.5);
+  border-radius: 50%;
+  background: rgba(255, 253, 245, 0.7);
+  color: var(--gold);
+  font-size: 24px;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #9a6928;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-align: center;
+}
+
+.login-card h1 {
+  margin: 14px 0 0;
+  color: var(--brown);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(35px, 4vw, 46px);
+  font-weight: 400;
+  line-height: 1.05;
+  text-align: center;
+}
+
+.login-card h1 span {
+  display: block;
+  margin-top: 9px;
+  font-size: 22px;
+  font-style: italic;
+}
+
+.gold-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 150px;
+  margin: 22px auto;
+}
+
+.gold-divider span {
+  width: 45px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(182, 131, 48, 0.8));
+}
+
+.gold-divider span:last-child {
+  background: linear-gradient(90deg, rgba(182, 131, 48, 0.8), transparent);
+}
+
+.gold-divider b {
+  color: var(--gold);
+  font-size: 10px;
+}
+
+.login-description {
+  margin: 0 0 18px;
+  color: #684522;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Indicadores de contraseña */
+
+.pin-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 13px;
+  margin-bottom: 8px;
+  color: #c18b36;
+  font-size: 20px;
+}
+
+.pin-indicators span {
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.pin-indicators .filled {
+  transform: scale(1.12);
+  color: #b97b24;
+}
+
+.pin-error {
+  animation: pinShake 0.35s ease;
+}
+
+.error-message {
+  margin: 0 0 8px;
+  color: #a24c37;
+  font-size: 12px;
+}
+
+/* Teclado */
+
+.numeric-keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 11px;
+  width: 250px;
+  margin: 3px auto 20px;
+}
+
+.key-button {
+  width: 68px;
+  height: 68px;
+  border: 1px solid rgba(194, 143, 62, 0.52);
+  border-radius: 50%;
+  background: rgba(255, 250, 237, 0.84);
+  color: var(--brown);
+  box-shadow: 0 5px 15px rgba(113, 69, 22, 0.08);
+  cursor: pointer;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.key-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 20px rgba(113, 69, 22, 0.14),
+    0 0 15px rgba(206, 157, 75, 0.14);
+}
+
+.key-button:active:not(:disabled) {
+  transform: scale(0.92);
+}
+
+.key-button:disabled {
+  cursor: default;
+}
+
+.delete-button {
+  font-size: 25px;
+}
+
+.key-placeholder {
+  width: 68px;
+  height: 68px;
+}
+
+/* Botón principal */
+
+.open-button {
+  position: relative;
+  width: 255px;
+  min-height: 48px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 999px;
+  background: #d7b16e;
+  color: rgba(255, 252, 244, 0.72);
+  cursor: not-allowed;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 13px;
+  font-weight: 700;
+  transition: transform 0.25s ease, box-shadow 0.3s ease;
+}
+
+.open-button.ready {
+  background: linear-gradient(100deg, #b97d28, #d9a94f, #a96d1f);
+  color: #fff9eb;
+  cursor: pointer;
+  box-shadow:
+    0 10px 30px rgba(152, 94, 19, 0.3),
+    0 0 22px rgba(225, 180, 85, 0.28);
+}
+
+.open-button.ready::after {
+  position: absolute;
+  top: 0;
+  left: -80%;
+  width: 45%;
+  height: 100%;
+  transform: skewX(-20deg);
+  background: rgba(255, 255, 255, 0.32);
+  content: "";
+  animation: buttonShine 2.7s ease-in-out infinite;
+}
+
+.open-button.ready:hover {
+  transform: translateY(-2px);
+}
+
+.login-footer {
+  margin: auto 0 0;
+  color: #9b7139;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 11px;
+}
+
+/* =========================================================
+   3. ESCENA DE LA TORTA
+   ========================================================= */
+
+.cake-scene {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 45px 20px 30px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 46%, rgba(145, 88, 30, 0.4), transparent 35%),
+    linear-gradient(135deg, #110b07, #25160b 50%, #0b0704);
+  color: #fff4d9;
+}
+
+.cake-background-glow {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  width: 580px;
+  height: 580px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(196, 137, 53, 0.14);
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+.music-button {
+  position: absolute;
+  z-index: 30;
+  top: 18px;
+  left: 18px;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(221, 176, 94, 0.55);
+  border-radius: 50%;
+  background: rgba(49, 29, 12, 0.78);
+  color: #f0cb83;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.cake-stars {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cake-stars span {
+  position: absolute;
+  color: rgba(224, 184, 108, 0.55);
+  font-size: 15px;
+  animation: starPulse 3s ease-in-out infinite;
+}
+
+.cake-stars span:nth-child(1) { top: 17%; left: 14%; }
+.cake-stars span:nth-child(2) { top: 29%; right: 14%; }
+.cake-stars span:nth-child(3) { top: 48%; left: 8%; }
+.cake-stars span:nth-child(4) { top: 65%; right: 10%; }
+.cake-stars span:nth-child(5) { top: 78%; left: 18%; }
+.cake-stars span:nth-child(6) { top: 82%; right: 21%; }
+
+.cake-header,
+.celebration-header {
+  position: relative;
+  z-index: 5;
+  text-align: center;
+}
+
+.cake-header p,
+.celebration-header p {
+  margin: 0 0 8px;
+  color: #d6ae68;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+
+.cake-header h1 {
+  margin: 0;
+  color: #fff0ca;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(45px, 6vw, 70px);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.cake-header .gold-divider {
+  margin: 18px auto 12px;
+}
+
+.cake-header > span {
+  color: rgba(255, 240, 209, 0.72);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 13px;
+}
+
+.cake-stage {
+  position: relative;
+  z-index: 4;
+  width: min(1080px, 94vw);
+  aspect-ratio: 4 / 3;
+  margin-top: 5px;
+  container-type: inline-size;
+}
+
+.cake-image {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 25px 28px rgba(0, 0, 0, 0.32));
+}
+
+.cake-light {
+  position: absolute;
+  z-index: 1;
+  top: 21%;
+  left: 50%;
+  width: 62%;
+  height: 45%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: rgba(229, 181, 92, 0.11);
+  filter: blur(45px);
+}
+
+/* =========================================================
+   4. VELAS
+   Se conservan sus posiciones y tamaños.
+   ========================================================= */
+
+.candles-layer {
+  position: absolute;
+  z-index: 8;
+  inset: 0;
+  pointer-events: none;
+}
+
+.candle {
+  position: absolute;
+  width: var(--flame-width);
+  height: calc(var(--body-height) + var(--flame-height) - 4px);
+  padding: 0;
+  transform: translateX(-50%);
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.candle-short {
+  --body-height: clamp(42px, 7.5cqw, 84px);
+  --flame-height: clamp(20px, 2.8cqw, 32px);
+  --body-width: clamp(8px, 1.1cqw, 12px);
+  --flame-width: clamp(14px, 1.9cqw, 23px);
+  --base-width: clamp(15px, 1.8cqw, 20px);
+}
+
+.candle-medium {
+  --body-height: clamp(54px, 9.7cqw, 108px);
+  --flame-height: clamp(22px, 3.2cqw, 37px);
+  --body-width: clamp(9px, 1.3cqw, 14px);
+  --flame-width: clamp(16px, 2.1cqw, 26px);
+  --base-width: clamp(16px, 2cqw, 22px);
+}
+
+.candle-tall {
+  --body-height: clamp(64px, 12cqw, 132px);
+  --flame-height: clamp(27px, 3.6cqw, 42px);
+  --body-width: clamp(10px, 1.4cqw, 15px);
+  --flame-width: clamp(18px, 2.3cqw, 28px);
+  --base-width: clamp(17px, 2cqw, 22px);
+}
+
+.candle-body {
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+  left: 50%;
+  width: var(--body-width);
+  height: var(--body-height);
+  transform: translateX(-50%);
+  border: 1px solid rgba(255, 236, 196, 0.9);
+  border-radius: 4px 4px 2px 2px;
+  background: repeating-linear-gradient(
+    135deg,
+    #fff3d5 0,
+    #fff3d5 5px,
+    #e7ba65 5px,
+    #e7ba65 8px
+  );
+  box-shadow:
+    inset 2px 0 3px rgba(255, 255, 255, 0.9),
+    inset -2px 0 3px rgba(151, 95, 29, 0.15),
+    0 2px 5px rgba(0, 0, 0, 0.24);
+}
+
+.candle-wick {
+  position: absolute;
+  z-index: 3;
+  top: calc(var(--flame-height) - 5px);
+  left: 50%;
+  width: 2px;
+  height: 8px;
+  transform: translateX(-50%);
+  border-radius: 1px;
+  background: #51351d;
+}
+
+.candle-base {
+  position: absolute;
+  z-index: 4;
+  bottom: -2px;
+  left: 50%;
+  width: var(--base-width);
+  height: clamp(5px, 0.65cqw, 8px);
+  transform: translateX(-50%);
+  border: 1px solid rgba(255, 226, 157, 0.9);
+  border-radius: 50%;
+  background: linear-gradient(180deg, #f8d991, #bd822d);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.candle-flame {
+  position: absolute;
+  z-index: 5;
+  top: 0;
+  left: 50%;
+  width: var(--flame-width);
+  height: var(--flame-height);
+  transform: translateX(-50%);
+  transform-origin: center bottom;
+  border-radius: 50% 50% 45% 45%;
+  background: radial-gradient(
+    ellipse at 50% 68%,
+    #fff 0%,
+    #fff8cc 20%,
+    #ffdc78 43%,
+    #ffad36 68%,
+    rgba(255, 155, 36, 0) 78%
+  );
+  filter:
+    drop-shadow(0 0 5px rgba(255, 227, 147, 0.95))
+    drop-shadow(0 0 13px rgba(255, 174, 54, 0.8));
+  animation: flame 0.75s ease-in-out infinite alternate;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.candle-lit .candle-flame {
+  visibility: visible;
+  opacity: 1;
+}
+
+.candle-lit:hover .candle-flame {
+  animation-duration: 0.45s;
+}
+
+.candle-off {
+  opacity: 1;
+  cursor: default;
+  pointer-events: none;
+}
+
+.candle-off .candle-flame {
+  visibility: hidden;
+  opacity: 0;
+  animation: none;
+  filter: none;
+}
+
+.candle-off .candle-body,
+.candle-off .candle-wick,
+.candle-off .candle-base {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* =========================================================
+   5. CELEBRACIÓN
+   ========================================================= */
+
+.celebration-header {
+  animation: celebrationEntrance 0.8s ease both;
+}
+
+.celebration-icon {
+  margin-bottom: 5px;
+  color: #f5c96f;
+  font-size: 27px;
+}
+
+.celebration-header h1 {
+  margin: 0;
+  color: #fff2cf;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(36px, 5vw, 58px);
+  font-weight: 400;
+  line-height: 1.05;
+}
+
+.celebration-header h1 span {
+  display: block;
+}
+
+.celebrating .cake-stage {
+  margin-top: 35px;
+  transform: scale(0.9);
+}
+
+.letter-button {
+  position: absolute;
+  z-index: 20;
+  bottom: 28px;
+  left: 50%;
+  min-width: 235px;
+  padding: 13px 28px;
+  transform: translateX(-50%);
+  border: 1px solid rgba(229, 192, 121, 0.5);
+  border-radius: 999px;
+  background: linear-gradient(100deg, #9d641e, #c9953e, #9b621c);
+  color: #fff7e4;
+  cursor: pointer;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.28),
+    0 0 25px rgba(208, 156, 65, 0.22);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 14px;
+  font-weight: 700;
+  transition: transform 0.25s ease;
+}
+
+.letter-button:hover:not(:disabled) {
+  transform: translateX(-50%) translateY(-3px);
+}
+
+.letter-button:disabled {
+  cursor: default;
+}
+
+/* =========================================================
+   6. CONFETI
+   ========================================================= */
+
+.confetti-container {
+  position: absolute;
+  z-index: 15;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -20px;
+  width: 7px;
+  height: 13px;
+  border-radius: 2px;
+  background: #d6a653;
+  animation: confettiFall 3.8s linear forwards;
+}
+
+.confetti-piece:nth-child(3n) {
+  background: #f6e8c8;
+}
+
+.confetti-piece:nth-child(4n) {
+  background: #b87927;
+}
+
+/* =========================================================
+   7. ESCENA DE LA CARTA
+   ========================================================= */
+
+.letter-scene {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 24px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(202, 155, 76, 0.18), transparent 34%),
+    linear-gradient(135deg, #21140a, #0d0906 65%, #1d1208);
+  color: #fff5df;
+}
+
+.letter-glow {
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+  width: min(65vw, 520px);
+  height: min(65vw, 520px);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(215, 170, 87, 0.09);
+  filter: blur(70px);
+  pointer-events: none;
+}
+
+.letter-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.letter-particles span {
+  position: absolute;
+  color: rgba(224, 190, 121, 0.65);
+  font-size: 18px;
+  animation: starPulse 4s ease-in-out infinite;
+}
+
+.letter-particles span:nth-child(1) { top: 17%; left: 14%; }
+.letter-particles span:nth-child(2) { top: 24%; right: 17%; }
+.letter-particles span:nth-child(3) { bottom: 20%; left: 20%; }
+.letter-particles span:nth-child(4) { bottom: 17%; right: 14%; }
+.letter-particles span:nth-child(5) { top: 46%; left: 8%; }
+.letter-particles span:nth-child(6) { top: 52%; right: 8%; }
+
+/* Encabezado superior */
+
+.letter-intro {
+  position: absolute;
+  z-index: 4;
+  top: clamp(28px, 7vh, 68px);
+  width: min(900px, 92vw);
+  padding: 0 12px;
+  text-align: center;
+  opacity: 1;
+  transition: opacity 0.3s ease, transform 0.35s ease;
+}
+
+.letter-intro p {
+  margin: 0 0 10px;
+  color: #d7b571;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 4px;
+}
+
+.letter-intro h1 {
+  margin: 0;
+  color: #fff0cf;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(32px, 4.5vw, 58px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.letter-intro span {
+  display: block;
+  margin-top: 12px;
+  color: rgba(250, 237, 211, 0.76);
+  font-size: 13px;
+}
+
+.letter-intro.intro-hidden {
+  transform: translateY(-12px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =========================================================
+   8. SOBRE: ESTRUCTURA DE CAPAS INDEPENDIENTES
+   ========================================================= */
+
+.envelope-wrapper {
+  position: relative;
+  z-index: 6;
+  isolation: isolate;
+  flex: 0 0 auto;
+  width: min(760px, 88vw);
+  height: 460px;
+  margin: 100px 0 0;
+  overflow: visible;
+  perspective: 1200px;
+}
+
+/* Capa 1: interior del sobre */
+
+.envelope-back {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 30px;
+  left: 0;
+  height: 270px;
+  overflow: hidden;
+  border: 1px solid rgba(183, 135, 57, 0.65);
+  border-radius: 10px;
+  background: linear-gradient(145deg, #fffaf0 0%, #f7e9cc 52%, #e7d0a4 100%);
+  box-shadow:
+    0 26px 55px rgba(0, 0, 0, 0.27),
+    0 0 26px rgba(205, 160, 83, 0.09);
+}
+
+.envelope-back::before {
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(186, 138, 62, 0.28);
+  border-radius: 5px;
+  content: "";
+  pointer-events: none;
+}
+
+/* =========================================================
+   9. PAPEL: OCULTO DENTRO DEL SOBRE HASTA ABRIRLO
+   ========================================================= */
+
+.letter-paper {
+  position: absolute;
+  z-index: 2;
+  bottom: 28px;
+  left: 50%;
+  width: 86%;
+  height: min(480px, calc(100svh - 230px));
+  min-height: 330px;
+  padding: clamp(24px, 3.2vw, 40px) clamp(22px, 4vw, 50px);
+  overflow: hidden;
+  transform: translateX(-50%) translateY(120px) scale(0.97);
+  transform-origin: 50% 100%;
+  border: 1px solid rgba(187, 140, 67, 0.7);
+  border-radius: 3px;
+  background: linear-gradient(145deg, #fffdf6 0%, #fff8e8 48%, #f0e0c1 100%);
+  box-shadow:
+    0 18px 44px rgba(0, 0, 0, 0.24),
+    0 4px 12px rgba(86, 53, 29, 0.1);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    transform 0.72s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.35s ease,
+    visibility 0s linear 0.72s;
+}
+
+.letter-paper::before {
+  position: absolute;
+  inset: 12px;
+  border: 1px solid rgba(187, 142, 68, 0.32);
+  content: "";
+  pointer-events: none;
+}
+
+/* Texto desplazable dentro del papel */
+
+.letter-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  padding: 3px 12px 12px 3px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(166, 118, 48, 0.45) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+.letter-content::-webkit-scrollbar {
+  width: 4px;
+}
+
+.letter-content::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: rgba(166, 118, 48, 0.45);
+}
+
+.letter-title {
+  margin: 0;
+  color: #6e431d;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(23px, 2.8vw, 32px);
+  font-style: italic;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.letter-line {
+  width: min(220px, 65%);
+  height: 1px;
+  margin: 15px auto 18px;
+  background: linear-gradient(90deg, transparent, #c2944a, transparent);
+}
+
+.letter-from {
+  margin: 0 0 22px;
+  color: #9b6b2c;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.letter-body p {
+  margin: 0 0 14px;
+  color: #4e321d;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 14px;
+  line-height: 1.65;
+  overflow-wrap: break-word;
+}
+
+.letter-closing {
+  margin: 24px 0 0;
+  color: #6e431d;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 15px;
+  text-align: center;
+}
+
+.letter-signature {
+  margin: 7px 0 12px;
+  color: #9d6b28;
+  font-family: cursive;
+  font-size: clamp(24px, 3vw, 31px);
+  text-align: center;
+}
+
+/* =========================================================
+   10. FRENTE DEL SOBRE
+   ========================================================= */
+
+.envelope-front {
+  position: absolute;
+  z-index: 5;
+  right: 0;
+  bottom: 30px;
+  left: 0;
+  height: 270px;
+  overflow: hidden;
+  border: 1px solid rgba(184, 137, 63, 0.32);
+  border-radius: 10px;
+  clip-path: polygon(0 0, 50% 52%, 100% 0, 100% 100%, 0 100%);
+  background: linear-gradient(135deg, #fff8e8 0%, #f0dfbd 50%, #dfc395 100%);
+  box-shadow: 0 12px 24px rgba(54, 32, 11, 0.12);
+  transition: opacity 0.35s ease;
+}
+
+.envelope-front::after {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.16) 50%,
+    transparent 78%
+  );
+  content: "";
+  pointer-events: none;
+}
+
+/* =========================================================
+   11. SOLAPA SUPERIOR
+   ========================================================= */
+
+.envelope-flap {
+  position: absolute;
+  z-index: 7;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 180px;
+  clip-path: polygon(0 0, 100% 0, 50% 84%);
+  transform: rotateX(0deg);
+  transform-origin: 50% 0%;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: linear-gradient(180deg, #fffaf0 0%, #f6e6c5 55%, #e4c997 100%);
+  filter: drop-shadow(0 5px 4px rgba(63, 39, 15, 0.12));
+  transition:
+    transform 0.7s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.2s ease 0.28s;
+  pointer-events: none;
+}
+
+/* Sello */
+
+.wax-seal {
+  position: absolute;
+  top: 27%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  transform: translateX(-50%);
+  border: 2px solid #e9cd91;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #edcf8b, #c2913e 58%, #97621f 100%);
+  box-shadow:
+    0 4px 10px rgba(71, 43, 13, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.4);
+  color: #fff5db;
+  font-size: 19px;
+}
+
+/* Botón invisible que abre el sobre.
+   Solo existe mientras el sobre está cerrado. */
+
+.envelope-open-trigger {
+  position: absolute;
+  z-index: 10;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.envelope-open-trigger:hover {
+  background: rgba(255, 237, 195, 0.025);
+}
+
+.envelope-open-trigger:focus-visible {
+  outline: 2px solid var(--gold-light);
+  outline-offset: 5px;
+}
+
+/* =========================================================
+   12. SOBRE ABIERTO: ORDEN EXPLÍCITO DE LAS CAPAS
+   ========================================================= */
+
+/* La carta se eleva suavemente y pasa por delante de las solapas. */
+
+.envelope-wrapper.is-open .letter-paper {
+  z-index: 12;
+  transform: translateX(-50%) translateY(-12px) scale(1);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    transform 0.72s cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 0.35s ease,
+    visibility 0s;
+}
+
+/* La solapa gira hacia atrás y se desvanece.
+   Ya no puede cubrir el título ni el texto de la carta. */
+
+.envelope-wrapper.is-open .envelope-flap {
+  z-index: 7;
+  transform: rotateX(-180deg) translateY(-35px);
+  opacity: 0;
+  filter: none;
+}
+
+/* El frente se atenúa, conservando visible la forma del sobre. */
+
+.envelope-wrapper.is-open .envelope-front {
+  z-index: 5;
+  opacity: 0.16;
+  pointer-events: none;
+}
+
+/* El interior permanece en su lugar, sin encogerse ni moverse. */
+
+.envelope-wrapper.is-open .envelope-back {
+  z-index: 1;
+}
+
+/* =========================================================
+   13. MENSAJE INFERIOR DE LA CARTA
+   ========================================================= */
+
+.letter-open-message {
+  position: absolute;
+  z-index: 20;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  left: 50%;
+  width: max-content;
+  max-width: 90%;
+  transform: translateX(-50%);
+  color: #e4c383;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* =========================================================
+   14. ANIMACIONES
+   ========================================================= */
+
+@keyframes cardEntrance {
+  from {
+    transform: translateY(25px) scale(0.98);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes sceneFadeOut {
+  to {
+    transform: scale(1.02);
+    opacity: 0;
+  }
+}
+
+@keyframes stickerFloat {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-4deg);
+  }
+
+  50% {
+    transform: translate3d(9px, 14px, 0) rotate(4deg);
+  }
+}
+
+@keyframes sparklePulse {
+  0%, 100% {
+    transform: scale(0.7);
+    opacity: 0.15;
+  }
+
+  50% {
+    transform: scale(1.3);
+    opacity: 0.9;
+  }
+}
+
+@keyframes pinShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+@keyframes buttonShine {
+  0% { left: -80%; }
+  55%, 100% { left: 140%; }
+}
+
+@keyframes flame {
+  from {
+    transform: translateX(-50%) scale(0.92) rotate(-3deg);
+  }
+
+  to {
+    transform: translateX(-50%) scale(1.08) rotate(3deg);
+  }
+}
+
+@keyframes starPulse {
+  0%, 100% {
+    transform: scale(0.8);
+    opacity: 0.2;
+  }
+
+  50% {
+    transform: scale(1.12);
+    opacity: 0.85;
+  }
+}
+
+@keyframes celebrationEntrance {
+  from {
+    transform: translateY(-20px) scale(0.97);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes confettiFall {
+  0% {
+    top: -20px;
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  100% {
+    top: 110%;
+    transform: translateX(80px) rotate(520deg);
+    opacity: 0;
+  }
+}
+
+/* =========================================================
+   15. RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .login-card {
+    min-height: 630px;
+  }
+
+  .cake-stage {
+    width: 100vw;
+  }
+
+  .envelope-wrapper {
+    width: min(720px, 90vw);
+  }
+}
+
+@media (max-width: 700px) {
+  .login-scene {
+    padding: 18px;
+  }
+
+  .login-card {
+    width: min(410px, 94vw);
+    min-height: 610px;
+    padding: 32px 22px 24px;
+  }
+
+  .login-card h1 {
+    font-size: 33px;
+  }
+
+  .login-card h1 span {
+    font-size: 19px;
+  }
+
+  .numeric-keypad {
+    width: 225px;
+  }
+
+  .key-button,
+  .key-placeholder {
+    width: 62px;
+    height: 62px;
+  }
+
+  .cake-scene {
+    padding: 32px 12px 20px;
+  }
+
+  .cake-header h1 {
+    font-size: 42px;
+  }
+
+  .cake-stage {
+    width: 116vw;
+    margin-top: 5px;
+  }
+
+  .celebrating .cake-stage {
+    transform: scale(0.88);
+  }
+
+  .celebration-header h1 {
+    font-size: 35px;
+  }
+
+  .letter-scene {
+    padding: 18px 12px;
+  }
+
+  .letter-intro {
+    top: 35px;
+    width: 94%;
+  }
+
+  .letter-intro h1 {
+    font-size: clamp(29px, 7vw, 38px);
+  }
+
+  .letter-intro span {
+    font-size: 12px;
+  }
+
+  .envelope-wrapper {
+    width: 94vw;
+    height: 400px;
+    margin-top: 95px;
+  }
+
+  .envelope-back,
+  .envelope-front {
+    bottom: 28px;
+    height: 245px;
+  }
+
+  .envelope-flap {
+    height: 155px;
+  }
+
+  .wax-seal {
+    width: 42px;
+    height: 42px;
+    font-size: 17px;
+  }
+
+  .letter-paper {
+    bottom: 26px;
+    width: 91%;
+    height: min(460px, calc(100svh - 170px));
+    min-height: 300px;
+    padding: 26px 22px;
+    transform: translateX(-50%) translateY(110px) scale(0.97);
+  }
+
+  .envelope-wrapper.is-open .letter-paper {
+    transform: translateX(-50%) translateY(-6px) scale(1);
+  }
+
+  .letter-title {
+    font-size: 23px;
+  }
+
+  .letter-from {
+    margin-bottom: 18px;
+    font-size: 12px;
+  }
+
+  .letter-body p {
+    margin-bottom: 12px;
+    font-size: 13px;
+    line-height: 1.55;
+  }
+
+  .letter-signature {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  .birthday-sticker {
+    font-size: 19px;
+  }
+
+  .login-card {
+    min-height: 590px;
+  }
+
+  .login-card h1 {
+    font-size: 30px;
+  }
+
+  .numeric-keypad {
+    width: 210px;
+    gap: 8px;
+  }
+
+  .key-button,
+  .key-placeholder {
+    width: 58px;
+    height: 58px;
+  }
+
+  .open-button {
+    width: 230px;
+  }
+
+  .cake-header h1 {
+    font-size: 36px;
+  }
+
+  .cake-stage {
+    width: 125vw;
+  }
+
+  .envelope-wrapper {
+    width: 96vw;
+    height: 360px;
+    margin-top: 95px;
+  }
+
+  .envelope-back,
+  .envelope-front {
+    bottom: 22px;
+    height: 225px;
+  }
+
+  .envelope-flap {
+    height: 135px;
+  }
+
+  .wax-seal {
+    width: 36px;
+    height: 36px;
+    font-size: 15px;
+  }
+
+  .letter-paper {
+    bottom: 22px;
+    width: 92%;
+    height: min(430px, calc(100svh - 160px));
+    min-height: 280px;
+    padding: 23px 18px;
+    transform: translateX(-50%) translateY(100px) scale(0.97);
+  }
+
+  .envelope-wrapper.is-open .letter-paper {
+    transform: translateX(-50%) translateY(-4px) scale(1);
+  }
+
+  .letter-title {
+    font-size: 20px;
+  }
+
+  .letter-line {
+    margin: 12px auto 15px;
+  }
+
+  .letter-body p {
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .letter-open-message {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
